@@ -43,7 +43,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         },
         items: [
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/Project-C-Network/project-c-documentation/tree/develop',
             label: 'GitHub',
             position: 'right',
           },
@@ -66,7 +66,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/Project-C-Network/project-c-documentation/tree/develop',
               },
             ],
           },
