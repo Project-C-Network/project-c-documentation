@@ -110,7 +110,7 @@ The system integrates with several external services and tools:
  
 ## Context Diagram
 
-(Include a visual diagram here, if needed, to represent the system's interaction with external actors and systems.)
+![My Local Image](../../static/img/assets/BusinessContext/BusinessModelDiagram.webp)
 
  
 # Elements and Descriptions
