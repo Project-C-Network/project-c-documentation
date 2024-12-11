@@ -10,7 +10,7 @@ sidebar_position: 2
 
 Below is the building block view:
 
-![Project-C Building Block Diagram](../../static/img/assets/BuildingBlockView/buildingblockdiagram.png)
+![Project-C Building Block Diagram](../../static/img/assets/BuildingBlockView/buildngBlockMainScope.png)
 
 ## UML Code
 
@@ -19,11 +19,47 @@ Below is the building block view UML Code:
 ```plantuml
 @startuml
 left to right direction
-skinparam packageStyle rectangle
-skinparam shadowing false
-skinparam linetype ortho
 
-actor "User" as user
+' Set a light neutral background color for the entire diagram
+skinparam backgroundColor #FAFAFA
+
+skinparam nodesep 60
+skinparam ranksep 60
+skinparam defaultFontName "Helvetica"
+skinparam defaultFontSize 14
+
+' Actor styling
+skinparam actorStyle awesome
+skinparam actorBackgroundColor #ADD8E6
+skinparam actorBorderColor #000080
+skinparam actorFontColor #000080
+skinparam actorFontStyle bold
+
+' Rectangle (component) styling
+skinparam rectangle {
+  BackgroundColor #F0F8FF
+  BorderColor #4169E1
+  FontColor #000080
+  FontStyle bold
+}
+
+' Package (external frames) styling
+skinparam package {
+  BackgroundColor #FAFAD2
+  BorderColor #4169E1
+  FontColor #000080
+  FontStyle bold
+}
+
+' Arrow styling
+skinparam ArrowColor #000080
+skinparam ArrowFontColor #000080
+skinparam ArrowFontSize 14
+skinparam ArrowThickness 2
+
+package "External Actor" as EA {
+  actor "User" as user
+}
 
 rectangle "Project-C" as ProjectC {
   rectangle "User Management Service (UMS)" as UMS
@@ -39,27 +75,29 @@ rectangle "Project-C" as ProjectC {
   rectangle "Email Service" as EmailService
 }
 
-rectangle "OpenStreetMap (OSM)" as OSM
-rectangle "Leaflet" as Leaflet
-rectangle "Google OAuth" as GoogleOAuth
-rectangle "Passkey (WebAuthn)" as Passkey
+package "External Integrations & SDKs" as EI {
+  rectangle "Google OAuth" as GoogleOAuth
+  rectangle "Passkey (WebAuthn)" as Passkey
+  rectangle "OpenStreetMap (OSM)" as OSM
+  rectangle "Leaflet" as Leaflet
+}
 
-user --> UMS : Register/Login
-UMS --> EmailService : Email verification/Reset
-UMS --> SocialAuth : For Google OAuth & Passkey login
+user --> UMS : Register\nLogin
+UMS --> EmailService : Email Verification\nReset
+UMS --> SocialAuth : Google OAuth &\nPasskey Login
 SocialAuth --> GoogleOAuth
 SocialAuth --> Passkey
 
-PCS --> GIS : Location-based posts
-CMS --> GIS : Nearby communities
-EmergencyReq --> GIS : Locate emergencies
-HelpLine --> GIS : Local help lines
+PCS --> GIS : Location-based\nPosts
+CMS --> GIS : Nearby\nCommunities
+EmergencyReq --> GIS : Locate\nEmergencies
+HelpLine --> GIS : Local\nHelp Lines
 
-GIS --> OSM : Map data
-GIS --> Leaflet : Frontend map rendering
+GIS --> OSM : Map\nData
+GIS --> Leaflet : Map\nRendering
 
-Notification --> UMS : User contacts
-Feedback --> UMS : User verification
-Chat --> UMS : User identities
+Notification --> UMS : User Contacts
+Feedback --> UMS : User Verification
+Chat --> UMS : User Identities
 
 @enduml
