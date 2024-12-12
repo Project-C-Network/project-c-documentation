@@ -1,0 +1,80 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<root>> #DDEEFF
+  BackgroundColor<<child>> #EEFFEE
+  BackgroundColor<<nested>> #FFEFEF
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title Feedback Collection System - Organizational Tree
+
+class "Feedback Collection System" as Root <<root>> {
+  ' Top level: Handles the collection and processing of user feedback
+  ' Input: User interactions from the feedback form
+  ' Output: Processed feedback data stored and potentially triggers responses
+}
+
+class "Feedback Type Selection" as TypeSelect <<child>> {
+  ' Allows user to select the type of feedback from a dropdown
+  ' Input: User selection from dropdown
+  ' Output: Selected feedback type
+}
+class "Type Selector Logic" as TypeLogic <<nested>> {
+  ' Input: User's dropdown action
+  ' Output: Feedback type value for form submission
+}
+
+class "Feedback Description Entry" as DescEntry <<child>> {
+  ' Provides a text area for users to enter detailed feedback
+  ' Input: User's text input
+  ' Output: Text data
+}
+class "Text Data Handler" as TextHandler <<nested>> {
+  ' Input: Text from text area
+  ' Output: Stored textual feedback
+}
+
+class "Experience Rating" as Rating <<child>> {
+  ' Allows users to rate their experience using emoticons
+  ' Input: Selection of an emoticon
+  ' Output: Numeric rating value
+}
+class "Rating Logic" as RatingLogic <<nested>> {
+  ' Input: User's emoticon selection
+  ' Output: Corresponding numeric value
+}
+
+class "Submission Processing" as SubmitProc <<child>> {
+  ' Manages the submission of the feedback form
+  ' Input: Complete feedback form data
+  ' Output: Confirmation of submission, error handling
+}
+class "Data Validator" as Validator <<nested>> {
+  ' Input: All collected feedback data
+  ' Output: Validation results (pass/fail)
+}
+class "Data Storage" as Storage <<nested>> {
+  ' Input: Validated feedback data
+  ' Output: Data stored in the feedback database
+}
+
+' Hierarchy (Parent -> Child)
+Root *-- TypeSelect
+TypeSelect *-- TypeLogic
+
+Root *-- DescEntry
+DescEntry *-- TextHandler
+
+Root *-- Rating
+Rating *-- RatingLogic
+
+Root *-- SubmitProc
+SubmitProc *-- Validator
+SubmitProc *-- Storage
+
+@enduml

@@ -1,0 +1,67 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<root>> #DDEEFF
+  BackgroundColor<<child>> #EEFFEE
+  BackgroundColor<<nested>> #FFEFEF
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title Helpline Service - Organizational Tree
+
+class "Helpline Service" as Root <<root>> {
+  ' Top level: Manages the helpline interaction features
+  ' Input: User clicks and searches
+  ' Output: Displayed helpline details and communication actions
+}
+
+class "Helpline Directory" as Directory <<child>> {
+  ' Provides a searchable directory of helpline numbers
+  ' Input: User search queries
+  ' Output: List of matching helplines
+}
+class "Search Interface" as SearchInt <<nested>> {
+  ' Input: Keywords or filters from the user
+  ' Output: Search results based on input
+}
+
+class "Communication Interface" as CommInt <<child>> {
+  ' Manages the initiation of communication actions
+  ' Input: User selection (call or copy actions)
+  ' Output: Initiation of call or copy to clipboard
+}
+class "Call Handler" as CallHandler <<nested>> {
+  ' Input: User clicks 'Call'
+  ' Output: Initiation of a phone call
+}
+class "Clipboard Manager" as Clipboard <<nested>> {
+  ' Input: User clicks 'Copy'
+  ' Output: Number copied to clipboard
+}
+
+class "Helpline Details" as Details <<child>> {
+  ' Displays detailed information about selected helpline
+  ' Input: User selects a helpline
+  ' Output: Detailed view of helpline information
+}
+class "Details Viewer" as Viewer <<nested>> {
+  ' Input: Selected helpline from search or list
+  ' Output: Display detailed information
+}
+
+' Hierarchy (Parent -> Child)
+Root *-- Directory
+Directory *-- SearchInt
+
+Root *-- CommInt
+CommInt *-- CallHandler
+CommInt *-- Clipboard
+
+Root *-- Details
+Details *-- Viewer
+
+@enduml

@@ -1,0 +1,95 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<root>> #DDEEFF
+  BackgroundColor<<child>> #EEFFEE
+  BackgroundColor<<nested>> #FFEFEF
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title Geo Integration Service - Detailed Organizational Tree
+
+class "Geo Integration Service (GIS)" as Root <<root>> {
+  ' Top level: Overall geolocation handling
+  ' Input: Location queries from various services
+  ' Output: Geocoded data, map tiles, and location analytics
+}
+
+class "GeoQueryAPI" as QueryAPI <<child>> {
+  ' Handles incoming geo location requests
+  ' Input: Coordinates, IP addresses
+  ' Output: Detailed location data
+}
+class "Request Intake" as ReqIntake <<nested>> {
+  ' Input: Raw location data
+  ' Output: Validated location queries
+}
+class "Request Validator" as Validator <<nested>> {
+  ' Input: Query parameters
+  ' Output: Validated and sanitized requests
+}
+
+class "ReverseGeocodingEngine" as ReverseGeo <<child>> {
+  ' Converts coordinates to readable addresses
+  ' Input: Latitude and longitude
+  ' Output: Structured address data
+}
+class "Coordinate Resolver" as CoordResolver <<nested>> {
+  ' Input: Raw coordinates
+  ' Output: Nearest known address coordinates
+}
+class "Address Normalizer" as AddrNormalizer <<nested>> {
+  ' Input: Preliminary address data
+  ' Output: Formatted, standardized addresses
+}
+
+class "MapDataRetriever" as MapRetriever <<child>> {
+  ' Fetches and manages map data for display
+  ' Input: Location details, zoom levels
+  ' Output: Map tiles, overlay data
+}
+class "OSM Tile Fetcher" as OSMTiles <<nested>> {
+  ' Input: Coordinates, tile request
+  ' Output: OpenStreetMap tiles
+}
+class "Leaflet Layer Manager" as LeafletManager <<nested>> {
+  ' Input: Map tiles and settings
+  ' Output: Configured Leaflet map layers
+}
+
+class "CachingLayer" as CacheLayer <<child>> {
+  ' Caches frequently accessed geo data to enhance performance
+  ' Input: Geocoded addresses, map tiles
+  ' Output: Cached data available for quick retrieval
+}
+class "Location Cache" as LocCache <<nested>> {
+  ' Input: Geocoded location data
+  ' Output: Cached location results
+}
+class "Tile Cache" as TileCache <<nested>> {
+  ' Input: Map tiles
+  ' Output: Cached tiles for faster access
+}
+
+' Hierarchy (Parent -> Child)
+Root *-- QueryAPI
+QueryAPI *-- ReqIntake
+QueryAPI *-- Validator
+
+Root *-- ReverseGeo
+ReverseGeo *-- CoordResolver
+ReverseGeo *-- AddrNormalizer
+
+Root *-- MapRetriever
+MapRetriever *-- OSMTiles
+MapRetriever *-- LeafletManager
+
+Root *-- CacheLayer
+CacheLayer *-- LocCache
+CacheLayer *-- TileCache
+
+@enduml
