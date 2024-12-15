@@ -1,0 +1,113 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<core>> #DDEEFF
+  BackgroundColor<<feature>> #EEFFEE
+  BackgroundColor<<logic>> #FFEFEF
+  BackgroundColor<<data>> #FFFFCC
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title **Integrated System Architecture with Dependencies**
+
+' Emergency Request System
+class "Emergency Request System" as EmergencySystem <<core>>
+class "Feed Management" as FeedMgmt <<feature>>
+class "Request Management" as RequestMgmt <<feature>>
+class "Emergency Chat System" as EmergencyChat <<feature>>
+class "Notification System (Emergency)" as NotifyEmergency <<feature>>
+
+EmergencySystem *-- FeedMgmt
+EmergencySystem *-- RequestMgmt
+EmergencySystem *-- EmergencyChat
+EmergencySystem *-- NotifyEmergency
+EmergencySystem *-- NotificationSystem : Sends emergency alerts
+
+' Community Management System
+class "Community Management System" as CommunitySystem <<core>>
+class "Group Creation Service" as GroupService <<feature>>
+class "Localized Chat Room" as LocalChatRoom <<feature>>
+class "User Login Service" as LoginService <<feature>>
+class "Notification System (Community)" as NotifyCommunity <<feature>>
+
+CommunitySystem *-- GroupService
+CommunitySystem *-- LocalChatRoom
+CommunitySystem *-- LoginService
+CommunitySystem *-- NotifyCommunity
+CommunitySystem *-- GeoSystem : Fetches user location
+CommunitySystem *-- AuthSystem : Uses authentication details
+
+' Feedback Collection System
+class "Feedback Collection System" as FeedbackSystem <<core>>
+class "Feedback Type Selection" as FeedbackType <<child>>
+class "Feedback Description Entry" as FeedbackDesc <<child>>
+class "Experience Rating" as ExperienceRating <<child>>
+class "Submission Processing" as SubmissionProc <<child>>
+
+FeedbackSystem *-- FeedbackType
+FeedbackSystem *-- FeedbackDesc
+FeedbackSystem *-- ExperienceRating
+FeedbackSystem *-- SubmissionProc
+FeedbackSystem *-- NotificationSystem : Notifies feedback-related alerts
+
+' Geo Integration Service
+class "Geo Integration Service" as GeoSystem <<core>>
+class "GeoQueryAPI" as GeoAPI <<child>>
+class "ReverseGeocodingEngine" as ReverseGeo <<child>>
+class "MapDataRetriever" as MapData <<child>>
+
+GeoSystem *-- GeoAPI
+GeoSystem *-- ReverseGeo
+GeoSystem *-- MapData
+GeoSystem *-- EmergencySystem : Provides location for emergencies
+GeoSystem *-- CommunitySystem : Helps assign user to groups
+
+' Helpline Service
+class "Helpline Service" as HelplineSystem <<core>>
+class "Helpline Directory" as HelplineDir <<child>>
+class "Communication Interface" as CommunicationIface <<child>>
+class "Helpline Details" as HelplineDetails <<child>>
+
+HelplineSystem *-- HelplineDir
+HelplineSystem *-- CommunicationIface
+HelplineSystem *-- HelplineDetails
+HelplineSystem *-- NotificationSystem : Sends helpline details to users
+
+' Notification Service
+class "Notification Service" as NotificationSystem <<core>>
+class "Incoming Requests" as IncomingReqs <<child>>
+class "Message Preparation" as MsgPrep <<child>>
+class "Recipient & Channel Determination" as RecipientChannel <<child>>
+
+NotificationSystem *-- IncomingReqs
+NotificationSystem *-- MsgPrep
+NotificationSystem *-- RecipientChannel
+
+' Post Management System
+class "Post Management System" as PostSystem <<core>>
+class "Post Feed Display" as PostFeedDisplay <<feature>>
+class "Post Creation" as PostCreation <<feature>>
+class "Post Data Storage" as PostStorage <<data>>
+
+PostSystem *-- PostFeedDisplay
+PostSystem *-- PostCreation
+PostSystem *-- PostStorage
+PostSystem *-- NotificationSystem : Sends notifications about posts
+PostSystem *-- EmergencySystem : Handles emergency posts
+
+' User Authentication System
+class "User Authentication System" as AuthSystem <<core>>
+class "User Registration" as UserReg <<feature>>
+class "User Login" as UserLogin <<feature>>
+class "Forgot Password" as ForgotPassword <<feature>>
+
+AuthSystem *-- UserReg
+AuthSystem *-- UserLogin
+AuthSystem *-- ForgotPassword
+AuthSystem *-- CommunitySystem : Provides authentication data
+
+@enduml

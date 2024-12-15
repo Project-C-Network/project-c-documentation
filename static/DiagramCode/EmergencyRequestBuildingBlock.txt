@@ -1,0 +1,77 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<core>> #DDEEFF
+  BackgroundColor<<feature>> #EEFFEE
+  BackgroundColor<<logic>> #FFEFEF
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title Emergency Request System with Chat Feature
+
+' Core component
+class "Emergency Request System" as Core <<core>> {
+  ' Handles emergency requests and manages interactions
+  ' Integrates feed management, requests, and communication features
+}
+
+' Feed management
+class "Feed Management" as FeedMgmt <<feature>> {
+  ' Allows users to create and view emergency-related posts
+  ' Input: Emergency details (e.g., type, description, urgency)
+  ' Output: Post data stored and displayed in the feed
+}
+class "Post Creation Logic" as PostLogic <<logic>> {
+  ' Validates and processes new post data
+  ' Input: User-submitted post details
+  ' Output: Validated post object for storage
+}
+
+' Emergency request handling
+class "Request Management" as RequestMgmt <<feature>> {
+  ' Handles incoming and outgoing emergency requests
+  ' Input: User-generated request or interaction
+  ' Output: Request status updates (Accepted/Ignored)
+}
+class "Request Validator" as ReqValidator <<logic>> {
+  ' Validates emergency request data
+  ' Input: Submitted request details
+  ' Output: Validation status (pass/fail)
+}
+
+' Chat functionality
+class "Emergency Chat System" as ChatSys <<feature>> {
+  ' Enables real-time communication for emergency requests
+  ' Input: User messages
+  ' Output: Chat history and updates
+}
+class "Chat Logic" as ChatLogic <<logic>> {
+  ' Manages message flow and handles user interactions in chat rooms
+  ' Input: User messages
+  ' Output: Organized chat threads
+}
+
+' Notification handling
+class "Notification System" as NotifySys <<feature>> {
+  ' Sends alerts for new emergency requests and updates
+  ' Input: Triggered events (new request, message)
+  ' Output: Notifications to relevant users
+}
+
+' Relationships
+Core *-- FeedMgmt
+FeedMgmt *-- PostLogic
+
+Core *-- RequestMgmt
+RequestMgmt *-- ReqValidator
+
+Core *-- ChatSys
+ChatSys *-- ChatLogic
+
+Core *-- NotifySys
+
+@enduml

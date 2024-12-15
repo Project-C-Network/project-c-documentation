@@ -1,0 +1,99 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<core>> #DDEEFF
+  BackgroundColor<<feature>> #EEFFEE
+  BackgroundColor<<logic>> #FFEFEF
+  BackgroundColor<<data>> #FFFFCC
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title User Authentication System - Register and Login Flow
+
+' Core Authentication Component
+class "Authentication System" as AuthSystem <<core>> {
+  ' Manages user authentication, including OAuth and WebAuthn
+  ' Supports registration, login, and password recovery
+}
+
+' User Registration
+class "User Registration" as UserReg <<feature>> {
+  ' Handles new user registration with email/phone or social login
+  ' Input: User details (username, password, location, etc.)
+  ' Output: Registered user account
+}
+class "Registration Validation" as RegValidation <<logic>> {
+  ' Validates registration details (e.g., unique username, strong password)
+  ' Input: User registration data
+  ' Output: Validation results
+}
+class "Social Login Provider" as SocialOAuth <<logic>> {
+  ' Manages OAuth-based login through social accounts
+  ' Input: Social account credentials
+  ' Output: Authenticated user session
+}
+
+' User Login
+class "User Login" as UserLogin <<feature>> {
+  ' Handles user login with username/password or passkey (WebAuthn)
+  ' Input: Username/password or biometric authentication
+  ' Output: User session token
+}
+class "Passkey Authentication" as PasskeyAuth <<logic>> {
+  ' Manages WebAuthn passkey login
+  ' Input: Biometric/credential data
+  ' Output: Authenticated user session
+}
+
+' Forgot Password
+class "Forgot Password" as ForgotPass <<feature>> {
+  ' Handles password recovery
+  ' Input: User email/phone for verification
+  ' Output: Reset link or PIN sent to user
+}
+class "Password Reset Validation" as ResetValidation <<logic>> {
+  ' Validates and processes password reset requests
+  ' Input: Reset token and new password
+  ' Output: Updated user credentials
+}
+
+' Verification Services
+class "Email Verification" as EmailVerify <<logic>> {
+  ' Sends and verifies 6-digit OTP for email verification
+  ' Input: User email
+  ' Output: Verification status
+}
+class "Mobile Number Verification" as MobileVerify <<logic>> {
+  ' Sends and verifies 6-digit OTP for phone verification
+  ' Input: User phone number
+  ' Output: Verification status
+}
+
+' Data Management
+class "User Data Storage" as UserStorage <<data>> {
+  ' Stores user credentials and profile data
+  ' Input: Registration or updated user credentials
+  ' Output: Persisted user data
+}
+
+' Relationships
+AuthSystem *-- UserReg
+UserReg *-- RegValidation
+UserReg *-- SocialOAuth
+
+AuthSystem *-- UserLogin
+UserLogin *-- PasskeyAuth
+
+AuthSystem *-- ForgotPass
+ForgotPass *-- ResetValidation
+
+AuthSystem *-- EmailVerify
+AuthSystem *-- MobileVerify
+
+AuthSystem *-- UserStorage
+
+@enduml

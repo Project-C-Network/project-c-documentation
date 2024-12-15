@@ -34,3 +34,9 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .footer .row .col {
   flex: 0;
 }
+
+.scrollable-image {
+  max-height: 400px; /* Adjust based on your preference */
+  overflow: auto;    /* Enables scrolling */
+  border: 1px solid #ccc; /* Optional: adds a border around the image */
+}

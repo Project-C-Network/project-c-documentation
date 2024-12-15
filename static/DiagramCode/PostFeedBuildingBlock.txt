@@ -1,0 +1,69 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<core>> #DDEEFF
+  BackgroundColor<<feature>> #EEFFEE
+  BackgroundColor<<logic>> #FFEFEF
+  BackgroundColor<<data>> #FFFFCC
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title Post Display and Creation System
+
+' Core component
+class "Post Management System" as PostSystem <<core>> {
+  ' Handles the creation, display, and management of posts
+  ' Integrates feed display, post creation, and request handling
+}
+
+' Feed Display Feature
+class "Post Feed Display" as FeedDisplay <<feature>> {
+  ' Displays posts for users to interact with
+  ' Input: Stored post data
+  ' Output: Rendered posts with user interactions (like, comment)
+}
+class "User Interaction Logic" as InteractionLogic <<logic>> {
+  ' Manages user actions like liking, commenting, and sharing posts
+  ' Input: User actions on posts
+  ' Output: Updated post interaction data
+}
+
+' Post Creation Feature
+class "Post Creation" as PostCreation <<feature>> {
+  ' Allows users to create new posts
+  ' Input: Post description and media content
+  ' Output: Newly created post data stored
+}
+class "Post Validation Logic" as PostValidation <<logic>> {
+  ' Validates post data for content guidelines and format
+  ' Input: User-submitted post data
+  ' Output: Validated post object
+}
+class "Emergency Post Toggle" as EmergencyToggle <<logic>> {
+  ' Determines if the post is marked as an emergency post
+  ' Input: User selection for emergency toggle
+  ' Output: Post flagged as emergency (true/false)
+}
+
+' Data Management
+class "Post Data Storage" as PostStorage <<data>> {
+  ' Stores all posts and associated metadata
+  ' Input: Validated post data
+  ' Output: Persistent storage for post data
+}
+
+' Relationships
+PostSystem *-- FeedDisplay
+FeedDisplay *-- InteractionLogic
+
+PostSystem *-- PostCreation
+PostCreation *-- PostValidation
+PostCreation *-- EmergencyToggle
+
+PostSystem *-- PostStorage
+
+@enduml

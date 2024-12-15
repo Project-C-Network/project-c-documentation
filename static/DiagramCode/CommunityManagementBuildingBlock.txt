@@ -1,0 +1,78 @@
+@startuml
+top to bottom direction
+
+skinparam class {
+  BackgroundColor<<core>> #DDEEFF
+  BackgroundColor<<feature>> #EEFFEE
+  BackgroundColor<<logic>> #FFEFEF
+  BackgroundColor<<data>> #FFFFCC
+  BorderColor #000000
+  FontColor #000000
+  FontName Arial
+  FontSize 12
+}
+
+title Community Management System with Localized Chat Rooms
+
+' Core component
+class "Community Management System" as Core <<core>> {
+  ' Manages community groups and chat rooms
+  ' Based on user locality and login details
+}
+
+' Locality-based group creation
+class "Group Creation Service" as GroupService <<feature>> {
+  ' Creates and manages groups based on user locality
+  ' Input: User's locality information
+  ' Output: Group created or existing group joined
+}
+class "Locality Logic" as LocalityLogic <<logic>> {
+  ' Determines group assignment based on user login details
+  ' Input: User location data
+  ' Output: Matching group ID or new group creation
+}
+
+' Chat room feature
+class "Localized Chat Room" as ChatRoom <<feature>> {
+  ' Enables users in the same locality to interact in a chat room
+  ' Input: User messages and interactions
+  ' Output: Chat threads and message history
+}
+class "Chat Room Logic" as ChatRoomLogic <<logic>> {
+  ' Manages chat room activities and ensures user interactions are organized
+  ' Input: User messages
+  ' Output: Updated chat logs and notifications
+}
+
+' User data handling
+class "User Login Service" as LoginService <<feature>> {
+  ' Handles user login and provides location details
+  ' Input: User login credentials
+  ' Output: Authenticated user data and locality
+}
+class "Location Provider" as LocationProvider <<data>> {
+  ' Fetches user location during login
+  ' Input: User's IP or geolocation data
+  ' Output: Locality details
+}
+
+' Notification service
+class "Notification System" as NotifySys <<feature>> {
+  ' Sends updates and alerts for new messages or group activities
+  ' Input: Chat room or group activity
+  ' Output: Notifications to users
+}
+
+' Relationships
+Core *-- GroupService
+GroupService *-- LocalityLogic
+
+Core *-- ChatRoom
+ChatRoom *-- ChatRoomLogic
+
+Core *-- LoginService
+LoginService *-- LocationProvider
+
+Core *-- NotifySys
+
+@enduml
